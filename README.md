@@ -16,3 +16,5 @@ This one will dispatch a job and then ./vendor/bin/sail artisan queue:work shoul
 11. This will send the email. (Ofc it will need configuration in env side.)
 12. title,description,task_status,due_date those fields are indexed in database. 
 (It will make search fast but store/update/delete will be a bit slow)
+13. I've written testes for TaskService as well. For Test, sqlite is used. Please run
+    ./vendor/bin/sail artisan test

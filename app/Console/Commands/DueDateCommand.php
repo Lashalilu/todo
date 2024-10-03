@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\TaskStatusEnum;
 use App\Jobs\SendTaskDueEmail;
 use App\Mail\TaskDueToday;
 use App\Models\Task;
@@ -30,6 +31,7 @@ class DueDateCommand extends Command
     public function handle()
     {
         $tasks = Task::whereDate('due_date', now()->toDateString())
+            ->where('task_status', '!=', TaskStatusEnum::COMPLETED->value)
             ->with('user')
             ->get();
 

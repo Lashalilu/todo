@@ -14,7 +14,11 @@ return new class extends Migration {
             $table->index('due_date');
         });
 
-        DB::statement('CREATE INDEX tasks_description_index ON tasks (description(255))');
+        Schema::table('tasks', function (Blueprint $table) {
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->index([DB::raw('description(255)')], 'tasks_description_index');
+            }
+        });
 
     }
 
@@ -26,7 +30,10 @@ return new class extends Migration {
             $table->dropIndex(['due_date']);
         });
 
-        DB::statement('DROP INDEX tasks_description_index ON tasks');
-
+        Schema::table('tasks', function (Blueprint $table) {
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->dropIndex('tasks_description_index');
+            }
+        });
     }
 };
